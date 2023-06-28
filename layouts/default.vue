@@ -10,14 +10,14 @@
 
           <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
-              <li class="nav__item">
-                <nuxt-link to="posts" class="nav__link">Posts</nuxt-link>
-              </li>
-              <li class="nav__item">
+              <!-- <li class="nav__item">
+                <nuxt-link to="/posts" class="nav__link">Posts</nuxt-link>
+              </li> -->
+              <!-- <li class="nav__item">
                 <nuxt-link to="/inqueries" class="nav__link"
                   >Inqueries</nuxt-link
                 >
-              </li>
+              </li> -->
 
               <!-- <i class="bx bx-toggle-left change-theme" id="theme-button"><v-switch v-model="switch1" @click="changeTheme"></v-switch></i> -->
             </ul>

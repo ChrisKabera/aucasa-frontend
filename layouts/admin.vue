@@ -232,6 +232,7 @@ export default {
       console.log("hii");
     },
     logout() {
+      localStorage.removeItem("token")
       this.$router.push("/auth/login");
     },
   },

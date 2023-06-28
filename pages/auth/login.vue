@@ -21,7 +21,13 @@
               <form action="" @submit.prevent="submit">
                 <div class="">
                   <label for="">Email</label>
-                  <v-text-field dense outlined required type="email" v-model="email"></v-text-field>
+                  <v-text-field
+                    dense
+                    outlined
+                    required
+                    type="email"
+                    v-model="email"
+                  ></v-text-field>
                 </div>
                 <div class="row-height">
                   <div class="d-flex justify-space-between">
@@ -48,7 +54,12 @@
                   ></v-checkbox>
                 </div>
                 <div>
-                  <v-btn type="submit" block dark color="#00447b" :loading="loading"
+                  <v-btn
+                    type="submit"
+                    block
+                    dark
+                    color="#00447b"
+                    :loading="loading"
                     >Sign in</v-btn
                   >
                 </div>
@@ -70,8 +81,8 @@
 export default {
   data() {
     return {
-      password:"",
-      email:"",
+      password: "",
+      email: "",
       loading: false,
       checkbox: false,
       show1: false,
@@ -98,11 +109,23 @@ export default {
     async submit() {
       try {
         this.loading = true;
-        const { res } = await this.$axios.post("users/authenticate", {
-          username: this.email,
-          password: this.password,
-        });
-        console.log("res", res);
+        const response = await fetch(
+          "https://elite-harbor-production.up.railway.app/users/authenticate",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: this.email,
+              password: this.password,
+            }),
+          }
+        );
+        const data = await response.json();
+        // console.log(data);
+        localStorage.setItem("token", data.token);
+        this.$router.push('/dashboard')
       } catch (error) {
         console.log("error", error);
       } finally {

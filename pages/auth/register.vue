@@ -130,13 +130,13 @@ export default {
       loading: false,
       show1: false,
       show2: false,
-      fname: "test",
-      lname: "test",
-      faculuty: "IT",
-      age: "20",
-      role: "GUILD",
-      email: "test@me.com",
-      password: "test@123",
+      fname: "",
+      lname: "",
+      faculuty: "",
+      age: "",
+      role: "",
+      email: "",
+      password: "",
       faculities: ["IT", "BUSINESS", "THEOLOGY"],
       roles: ["GUILD", "TREASUROR", "MINISTERS"],
     };
@@ -162,16 +162,36 @@ export default {
     async submit() {
       try {
         this.loading = true;
-        const { res } = await this.$axios.post("users/new", {
-          email: this.email,
-          firstName: this.fname,
-          lastName: this.lname,
-          faculty: this.faculuty,
-          age: this.age,
-          roles: this.role,
-          password: this.password,
-        });
-        console.log("res", res);
+        // const { res } = await this.$axios.post("users/new", {
+        //   email: this.email,
+        //   firstName: this.fname,
+        //   lastName: this.lname,
+        //   faculty: this.faculuty,
+        //   age: this.age,
+        //   roles: this.role,
+        //   password: this.password,
+        // });
+        const response = await fetch(
+          "https://elite-harbor-production.up.railway.app/users/new",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: this.email,
+              firstName: this.fname,
+              lastName: this.lname,
+              faculty: this.faculuty,
+              age: this.age,
+              roles: this.role,
+              password: this.password,
+            }),
+          }
+        );
+        const data = await response.json();
+        this.$router.push('/auth/login');
+        console.log(data);
       } catch (error) {
         console.log("error", error);
       } finally {
