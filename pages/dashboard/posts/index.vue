@@ -82,10 +82,7 @@
             </v-dialog>
           </v-toolbar>
         </template>
-        <template v-slot:item.index="{ item }">
-              <!-- <span><span>{{ item.created_at.toLocaleDateString() }}</span></span> -->
-              <span><span>{{ index+1 }}</span></span>
-            </template>
+       
         <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
@@ -106,12 +103,12 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-      {
-        text: "No",
-        align: "start",
-        sortable: false,
-        value: "index",
-      },
+      // {
+      //   text: "No",
+      //   align: "start",
+      //   sortable: false,
+      //   value: "index",
+      // },
       { text: "Added By", value: "addedBy" },
       { text: "Description", value: "description" },
       // { text: "Carbs (g)", value: "carbs" },
@@ -119,7 +116,7 @@ export default {
       { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
-    posts:[],
+    posts: [],
     editedIndex: -1,
     editedItem: {
       addedBy: "",
@@ -154,107 +151,69 @@ export default {
   methods: {
     async getPosts() {
       try {
-        this.posts = []
+        return;
+        this.posts = [];
         const token = localStorage.getItem("token");
         const response = await fetch(
-            "https://elite-harbor-production.up.railway.app/aucasa/posts/all",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-              },
-             
-            }
-          );
-          const data = await response.json();
-          console.log("data", data);
-          this.posts = data
-        
+          "https://elite-harbor-production.up.railway.app/aucasa/posts/all",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        console.log("data", data);
+        this.posts = data;
       } catch (error) {
         console.log("error", error);
-      }
-      finally {
+      } finally {
         console.log("Get Posts");
       }
     },
     initialize() {
-      this.desserts = [
+      this.posts = [
         {
-          addedBy: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
+          addedBy: "Yuhi Yogurt",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
         {
-          addedBy: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
+          addedBy: "Frozen Yuhi",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
         {
-          addedBy: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
+          addedBy: "Kyle Yogurt",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
         {
-          addedBy: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
+          addedBy: "Frozen Kyle",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
         {
-          addedBy: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
+          addedBy: "Ben Yogurt",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
         {
-          addedBy: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
+          addedBy: "Frozen Ben",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
         {
-          addedBy: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-        },
-        {
-          addedBy: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-        },
-        {
-          addedBy: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-        },
-        {
-          addedBy: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
+          addedBy: "ken Yogurt",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
         },
       ];
     },
 
     editItem(item) {
-      
       this.editedIndex = 1;
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
@@ -302,10 +261,10 @@ export default {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({
-                id:this.currentId,
+                id: this.currentId,
                 addedBy: this.editedItem.addedBy,
                 description: this.editedItem.description,
               }),
@@ -327,7 +286,7 @@ export default {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({
                 addedBy: this.editedItem.addedBy,
